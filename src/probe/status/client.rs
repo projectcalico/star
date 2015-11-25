@@ -2,6 +2,7 @@ use std::sync::{Arc, RwLock};
 use std::thread;
 
 use probe::status::StatusCache;
+use std::time;
 
 use hyper::client::Response;
 use hyper::Client;
@@ -55,7 +56,10 @@ impl Handler for ClientHandler {
         self.thread_pool.execute(move || {
             info!("Probing target: [{}]", target_url);
 
-            let client = Client::new();
+            let mut client = Client::new();
+	    let opt: Option<time::Duration> = Some(time::Duration::from_secs(1));
+            client.set_read_timeout(opt);
+            client.set_write_timeout(opt);
 
             let response: Result<Response, Error> =
                 client.get(&target_url)
