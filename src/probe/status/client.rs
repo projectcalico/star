@@ -1,7 +1,9 @@
 use std::sync::{Arc, RwLock};
 use std::thread;
+use std::option::Option;
 
 use probe::status::StatusCache;
+use std::process::Command; 
 use std::time;
 
 use hyper::client::Response;
@@ -56,22 +58,23 @@ impl Handler for ClientHandler {
         self.thread_pool.execute(move || {
             info!("Probing target: [{}]", target_url);
 
-            let mut client = Client::new();
-	    let opt: Option<time::Duration> = Some(time::Duration::from_secs(1));
-            client.set_read_timeout(opt);
-            client.set_write_timeout(opt);
+	    // Call into python code.
+            let res = Command::new("python").arg("/usr/bin/probe.py").arg(&target_url).output().unwrap_or_else(|e| {
+	        panic!("failed to execute process: {}", e)
+            });
 
-            let response: Result<Response, Error> =
-                client.get(&target_url)
-                    .header(Connection::close())
-                    .send();
-
+	    // Get success / fail.
+            info!("status: {}", res.status);
+	    info!("stdout: {}", String::from_utf8_lossy(&res.stdout));
+	    info!("stderr: {}", String::from_utf8_lossy(&res.stderr));
+         
             // Obtain an exclusive write lock to the status cache.
             let mut status_cache = status_cache.write().unwrap();
 
-            match response {
-                Ok(_) => status_cache.reachable(target_url),
-                Err(_) => status_cache.unreachable(target_url),
+            match res.status.code() {
+                Some(0) => status_cache.reachable(target_url),
+                None => status_cache.unreachable(target_url),
+                Some(_) => status_cache.unreachable(target_url),
             }
         });
     }

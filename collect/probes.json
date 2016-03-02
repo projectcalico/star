@@ -1,18 +1,18 @@
 [
   {
     "id": "F",
-    "url": "http://frontend.webapp.cluster.local:9000/status"
+    "url": "http://frontend.default.cluster.local:80/status"
   },
   {
-    "id": "D",
-    "url": "http://database.webapp.cluster.local:9000/status"
+    "id": "B",
+    "url": "http://backend.default.cluster.local:6379/status"
   },
   {
-    "id": "1",
-    "url": "http://client1.client.cluster.local:9000/status"
+    "id": "C",
+    "url": "http://client.client.cluster.local:9000/status"
   },
   {
-    "id": "2",
-    "url": "http://client2.client.cluster.local:9000/status"
+    "id": "M",
+    "url": "http://172.18.18.101:9000/status"
   }
 ]
