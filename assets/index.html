@@ -18,17 +18,17 @@
           // Mesosphere colors
           var palette = {
             neutral: {
-              light1: "#2E3343",
-              light19: "#EFEFEF"
+              light1: "#F5F5F5",    // Background
+              light19: "#f04c5c"
             },
             bright: {
-              powder: "#24CBFF",
-              mercury: "#EE468A",
-              royal: "#2568F5",
-              heliotrope: "#7F32DF",
-              seafoam: "#27C268",
-              lemon: "#F4B826",
-              mars: "#F72C4F"
+              powder: "#487F9F",    // Conn color 1
+              mercury: "#53B464",   // Conn color 2 
+              royal: "#593DA9",
+              heliotrope: "#f08e4e",
+              seafoam: "#f35d6b",
+              lemon: "#f5f5f5",
+              mars: "#6ec654"
             }
           };
 
@@ -77,7 +77,7 @@
                   var strokeColor = hexToRgb(edge.data.color);
                   var strokeAlpha = 0.95;
                   if (edge.data.reachable) {
-                    ctx.lineWidth = 30;
+                    ctx.lineWidth = 20;
                   }
                   else {
                     strokeAlpha = 0.1;
