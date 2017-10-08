@@ -19,6 +19,7 @@
           var palette = {
             neutral: {
               light1: "#2E3343",
+              light15: "#E0D5D5",
               light19: "#EFEFEF"
             },
             bright: {
@@ -28,7 +29,9 @@
               heliotrope: "#7F32DF",
               seafoam: "#27C268",
               lemon: "#F4B826",
-              mars: "#F72C4F"
+              mars: "#F72C4F",
+              purple: "#35066B",
+              beige: "#6D685B"
             }
           };
 
@@ -118,7 +121,7 @@
 
                   // render the label
                   ctx.font = "40px Sans-Serif";
-                  ctx.fillStyle = palette.neutral.light1;
+                  ctx.fillStyle = palette.neutral.light15;
                   ctx.fillText(node.name, point.x - 13, point.y + 13);
                 });
               }
